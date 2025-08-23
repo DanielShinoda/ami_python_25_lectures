@@ -4,8 +4,8 @@ from math_ops import crucial_func, max as my_max
 
 crucial_func()
 
-any_numer_seq = [1,2,2,51,2,2,1]
+any_number_seq = [1,2,2,51,2,2,1]
 
-print(max(any_numer_seq))
+print(max(any_number_seq))
 
 print(my_max(2,-9))

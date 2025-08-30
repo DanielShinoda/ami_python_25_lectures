@@ -1,3 +1,5 @@
+"""Tax module docstring"""
+
 print(f"Вызван модуль {__name__}")
 
 TAX_COEF = 0.13

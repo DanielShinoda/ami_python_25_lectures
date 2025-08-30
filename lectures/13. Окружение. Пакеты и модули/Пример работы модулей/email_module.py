@@ -1,3 +1,5 @@
+"""Email module docstring"""
+
 print(f"Вызван модуль {__name__}")
 
 def send_email(email_address: str, email_context: str):

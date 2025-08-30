@@ -1,6 +1,8 @@
+"""Report module docstring"""
+
 from tax_module import (
-    generate_tax,
     _PRIVATE_COEF,
+    generate_tax,
     PUBLIC_COEF as pc, 
     TAX_COEF as _TAX_COEF
 )

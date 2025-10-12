@@ -169,13 +169,201 @@ for lst in lists:
 
 ### Простые вопросы
 
+<details>
+<summary><b>Что такое множество?</b></summary>
+
+</details>
+
+<details>
+<summary><b>Что такое словарь?</b></summary>
+
+</details>
+
+<details>
+<summary><b>Какое применение множеств и словарей вы знаете?</b></summary>
+
+</details>
+
+<details>
+<summary><b>Что делает этот код?</b></summary>
+
+</details>
+
+```python
+{x**2 for x in range(10) if x % 2 == 0}
+```
+
+<details>
+<summary><b>Какой объект является хешируемым?</b></summary>
+
+</details>
+
+<details>
+<summary><b>Что может быть ключом в словаре?</b></summary>
+
+</details>
+
+<details>
+<summary><b>Что может быть значением в словаре?</b></summary>
+
+</details>
+
+<details>
+<summary><b>Что такое хеш?</b></summary>
+
+</details>
+
 ---
 
 ### Средние вопросы
 
+<details>
+<summary><b>Как берется хеш у кортежа?</b></summary>
+
+</details>
+
+<details>
+<summary><b>Что вы знаете о методах keys(), values(), items() в словаре? Какой тип у возвращаемых значений?</b></summary>
+
+</details>
+
+<details>
+<summary><b>Как можно изменить кортеж?</b></summary>
+
+</details>
+
+<details>
+<summary><b>Как проверить объект на хешируемость?</b></summary>
+
+</details>
+
+<details>
+<summary><b>Как сделать множество ключом в словаре?</b></summary>
+
+</details>
+
+<details>
+<summary><b>Что будет храниться в итоговом словаре?</b></summary>
+
+</details>
+
+```python
+{True: True, 1: 1, 1.0: 1.0}
+```
+
+<details>
+<summary><b>Что будет напечатано в примере ниже?</b></summary>
+
+</details>
+
+```python
+print(hash(-1), hash(-2))
+data = {
+    -1: "minus one",
+    -2: "minus two"
+}
+print(data)
+```
+
+<details>
+<summary><b>Что из этого может быть ключом в словаре?</b></summary>
+
+</details>
+
+```python
+d = {
+    1: "int",
+    "a": "str",
+    (1, 2): "tuple",
+    frozenset([1, 2]): "frozenset",
+    None: None,
+}
+```
+
+<details>
+<summary><b>Что выведет код и почему?</b></summary>
+
+</details>
+
+```python
+my_dict = {}
+my_dict[([1, 2])] = "hello"
+print(my_dict)
+```
+
+<details>
+<summary><b>Что эффективнее и почему?</b></summary>
+
+</details>
+
+```python
+# Способ 1
+if key in my_dict:
+    ...
+
+# Способ 2
+if my_dict.get(key) is not None:
+    ...
+```
+
 ---
 
 ### Сложные вопросы
+
+<details>
+<summary><b>Что вы знаете о методах keys(), values(), items() в словаре? Какой тип у возвращаемых значений?</b></summary>
+
+</details>
+
+<details>
+<summary><b>Верно ли утверждение, что неизменяемые объекты являются хешируемыми?</b></summary>
+
+</details>
+
+<details>
+<summary><b>Почему мы можем добавлять сколько угодно элементов в список, словарь или множество?</b></summary>
+
+</details>
+
+<details>
+<summary><b>Как развернуть значения и ключи местами в словаре? В чем могут быть проблемы?</b></summary>
+
+</details>
+
+<details>
+<summary><b>Какой из способов создать словарь валидный?</b></summary>
+
+</details>
+
+```python
+(
+    {None: None},
+    {(1, 2, []): None},
+    {int(): None},
+    {input: None},
+    {frozenset(): None},
+    {3: None},
+    {"key": None},
+    {int: None},
+)
+```
+
+<details>
+<summary><b>Что выведет этот код?</b></summary>
+
+</details>
+
+```python
+class Point:
+    def __init__(self, x, y):
+        self.x = x
+        self.y = y
+
+p1 = Point(1, 2)
+p2 = Point(1, 2)
+my_dict = {p1: "hello"}
+print(my_dict.get(p2))
+```
 
 ---
 
@@ -183,41 +371,446 @@ for lst in lists:
 
 ### Простые вопросы
 
+<details>
+<summary><b>Что выведет этот код?</b></summary>
+
+</details>
+
+```python
+a = [1, 2, 3]
+b = a
+b.append(4)
+print(len(a))
+```
+
+<details>
+<summary><b>Что выведет этот код?</b></summary>
+
+</details>
+
+```python
+x = 5
+y = x
+y += 1
+print(x)
+```
+
+<details>
+<summary><b>Что такое переменная?</b></summary>
+
+</details>
+
+<details>
+<summary><b>Как проверить что две переменные ссылаются на один и тот же объект?</b></summary>
+
+</details>
+
+<details>
+<summary><b>Что выведет этот код?</b></summary>
+
+</details>
+
+```python
+a = [1, 2]
+b = [3, 4]
+c = a + b
+a.append(5)
+print(c)
+```
+
 ---
 
 ### Средние вопросы
+
+<details>
+<summary><b>В чем разница между поверхностным и глубоким копированием?</b></summary>
+
+</details>
+
+<details>
+<summary><b>Можно ли сравнивать объекты при помощи is?</b></summary>
+
+</details>
+
+<details>
+<summary><b>Что выведет код и почему?</b></summary>
+
+</details>
+
+```python
+def modify(lst):
+    lst.append(4)
+    lst = [5, 6, 7]
+
+my_list = [1, 2, 3]
+modify(my_list)
+print(my_list)
+```
+
+<details>
+<summary><b>Что выведет код и почему?</b></summary>
+
+</details>
+
+```python
+a = [[0] * 5] * 5
+a[0][1] = 2
+a
+```
+
+<details>
+<summary><b>Что выведет код и почему?</b></summary>
+
+</details>
+
+```python
+a = [10, 20]
+b = [a, 30]
+a.append(b)
+a[2][0][2][0][2]
+```
 
 ---
 
 ### Сложные вопросы
 
+<details>
+<summary><b>Как устроен список под капотом? Почему мы можем хранить объекты разных типов?</b></summary>
+
+</details>
+
+<details>
+<summary><b>Как работает вставка в список?</b></summary>
+
+</details>
+
+<details>
+<summary><b>Что выведет код и почему?</b></summary>
+
+</details>
+
+```python
+t = (1, 2, [3, 4])
+t += [5, 6]
+print(t)
+```
+
+<details>
+<summary><b>Что выведет код и почему?</b></summary>
+
+</details>
+
+```python
+def create_functions():
+    return [lambda x: x + i for i in range(3)]
+
+functions = create_functions()
+results = [f(10) for f in functions]
+print(results)
+```
+
+<details>
+<summary><b>Что такое рекурсия. Какое у рекурсии должно быть обязательное свойство?</b></summary>
+
+</details>
+
 ---
 
-## Функции. Классы.
+## Функции.
 
 ### Простые вопросы
 
+<details>
+<summary><b>Можно ли принимать функцию в качестве аргумента и возвращать из функции? Почему?</b></summary>
+
+</details>
+
+<details>
+<summary><b>Функция - это изменяемый или неизменяемый объект?</b></summary>
+
+</details>
+
+<details>
+<summary><b>Что выведет код и почему?</b></summary>
+
+</details>
+
+```python
+def func(x):
+    x = x + 1
+    return x
+
+x = 5
+func(x)
+print(x)
+```
+
+<details>
+<summary><b>Чем отличается return от print внутри функции?</b></summary>
+
+</details>
+
+<details>
+<summary><b>Что такое аргументы по умолчанию в функции? Для чего используются и в чем их особенность?</b></summary>
+
+</details>
+
+
+<details>
+<summary><b>Что выведет этот код и почему?</b></summary>
+
+</details>
+
+```python
+def test():
+    pass
+
+result = test()
+print(result)
+```
+
 ---
 
 ### Средние вопросы
+
+<details>
+<summary><b>Что выведет этот код и почему?</b></summary>
+
+</details>
+
+```python
+def add_item(item, items=[]):
+    items.append(item)
+    return items
+
+print(add_item(1))
+print(add_item(2))
+```
+
+<details>
+<summary><b>Что выведет этот код и почему?</b></summary>
+
+</details>
+
+```python
+def func(a, b, c):
+    return a + b + c
+
+print(func(a=1, 2, 3))
+```
+
+<details>
+<summary><b>Что такое *args и **kwargs? Как они работаю?</b></summary>
+
+</details>
+
+<details>
+<summary><b>Что выведет этот код и почему?</b></summary>
+
+</details>
+
+```python
+def func(a, b, c):
+    return a + b + c
+
+params = {'a': 1, 'b': 2, 'c': 3}
+print(func(**params))
+```
 
 ---
 
 ### Сложные вопросы
 
+<details>
+<summary><b>Что такое лямбда-функции? В чем их ограничения и когда их стоит использовать?</b></summary>
+
+</details>
+
+<details>
+<summary><b>Поясните каждый принимаемый аргумент в этой функции.</b></summary>
+
+</details>
+
+```python
+from typing import Literal
+
+
+def create_mythical_creature(
+    species: Literal["dragon", "griffin", "phoenix", "unicorn"],
+    name: str,
+    /,
+    *abilities: list[str],
+    rarity: Literal["common", "rare", "epic", "legendary"] = "common",
+    habitat: str = "unknown",
+    **physical_traits: dict[str, int | str],
+) -> dict[str, object]:
+    return {
+        "species": species,
+        "name": name,
+        "abilities": list(abilities),
+        "rarity": rarity,
+        "habitat": habitat,
+        "physical_traits": physical_traits,
+        "description": f"A {rarity} {species} named {name} with {len(abilities)} abilities",
+    }
+```
+
 ---
 
-## Классы. Дескрипторы.
+## Классы.
 
 ### Простые вопросы
 
+<details>
+<summary><b>Что такое класс и экземпляр класса?</b></summary>
+
+</details>
+
+<details>
+<summary><b>Что такое магический метод?</b></summary>
+
+</details>
+
+<details>
+<summary><b>Для чего нужен магический метод __init__?</b></summary>
+
+</details>
+
+<details>
+<summary><b>Что такое self и зачем мы его передаем первым параметром в аргументы методов класса?</b></summary>
+
+</details>
+
+<details>
+<summary><b>В чем разница между атрибутами класса и атрибутами экземпляра?</b></summary>
+
+</details>
+
+
+<details>
+<summary><b>Что выведет и почему?</b></summary>
+
+</details>
+
+```python
+class A:
+    items = []
+    
+    def add(self, x):
+        self.items.append(x)
+
+a1 = A()
+a2 = A()
+a1.add(1)
+a2.add(2)
+print(a1.items)
+print(a2.items)
+```
+
+<details>
+<summary><b>Что выведет и почему?</b></summary>
+
+</details>
+
+```python
+class Counter:
+    count = 0
+    
+    def __init__(self):
+        self.count += 1
+
+c1 = Counter()
+c2 = Counter()
+print(c1.count)
+print(c2.count)
+print(Counter.count)
+```
+
 ---
 
 ### Средние вопросы
 
+<details>
+<summary><b>В чем разница между статичным методом и обычным методом класса?</b></summary>
+
+</details>
+
+<details>
+<summary><b>Как реализовать приватные атрибуты в питоне?</b></summary>
+
+</details>
+
+<details>
+<summary><b>Что такое свойства (properties) и для чего они нужны?</b></summary>
+
+</details>
+
+<details>
+<summary><b>Что выведет этот код и почему?</b></summary>
+
+</details>
+
+```python
+class A:
+    def __init__(self):
+        self.setup()
+
+    def setup(self):
+        print("A")
+
+
+class B(A):
+    def __init__(self):
+        super().__init__()
+
+    def setup(self):
+        print("B")
+
+
+obj = B()
+```
+
 ---
 
 ### Сложные вопросы
+
+<details>
+<summary><b>Что такое абстрактные классы и когда их использовать?</b></summary>
+
+</details>
+
+<details>
+<summary><b>Для чего нужны __slots__ и как они работают?</b></summary>
+
+</details>
+
+<details>
+<summary><b>Что будет напечатано и почему?</b></summary>
+
+</details>
+
+```python
+class Person:
+    def __init__(self, name, age):
+        self.name = name
+        self.age = age
+
+    def __eq__(self, other):
+        return isinstance(other, Person) and self.name == other.name
+
+    def __hash__(self):
+        return hash(self.name)
+
+
+p1 = Person("Alice", 25)
+p2 = Person("Alice", 30)
+print(p1 == p2)
+print(hash(p1) == hash(p2))
+
+d = {p1: "first"}
+d[p2] = "second"
+print(len(d))
+```
 
 ---
 
@@ -225,13 +818,163 @@ for lst in lists:
 
 ### Простые вопросы
 
+<details>
+<summary><b>Для чего нужны исключения?</b></summary>
+
+Подумайте
+</details>
+
+<details>
+<summary><b>Как отлавливать исключения?</b></summary>
+
+При помощи конструкции
+
+```python
+try:
+    ...
+except Exception:
+    ...
+```
+</details>
+
+<details>
+<summary><b>Как перехватывать сразу несколько исключений?</b></summary>
+
+Подумайте
+</details>
+
+<details>
+<summary><b>Как работает ключевое слово else в блоке try...except?</b></summary>
+
+Выполняется если не было проброшено исключений внутри блока try.
+</details>
+
+<details>
+<summary><b>Как работает ключевое слово finally в блоке try...except?</b></summary>
+
+Выполняется в любом случае.
+</details>
+
+<details>
+<summary><b>Как создать кастомное исключение?</b></summary>
+
+Унаследовать класс от `Exception`
+</details>
+
+<details>
+<summary><b>Что такое контекстный менеджер?</b></summary>
+
+Подумайте
+</details>
+
 ---
 
 ### Средние вопросы
 
+<details>
+<summary><b>Какие минусы перехватывания Exception (имеется ввиду широкий диапазон исключений) вы можете назвать?</b></summary>
+
+Подумайте
+</details>
+
+<details>
+<summary><b>Зачем нам сохранять исключение в отдельную переменную?</b></summary>
+
+Подумайте
+
+</details>
+
+```python
+try:
+    ...
+except Exception as err:
+    ...
+```
+
+<details>
+<summary><b>Какие ключевые слова можно использовать в конструкции ловли исключений?</b></summary>
+
+- `else` - расскажите как работает
+- `finally` - расскажите как работает
+</details>
+
+<details>
+<summary><b>Как работает этот блок кода?</b></summary>
+Подумайте
+</details>
+
+```python
+try:
+    try:
+        1 / 0
+    except ZeroDivisionError as e:
+        print("Логируем ошибку и пробрасываем дальше")
+        raise ValueError("a") from e
+except ValueError as err:
+    print("c")
+    raise ValueError("b") from err
+```
+
+<details>
+<summary><b>Для чего нужен контекстный менеджер?</b></summary>
+
+Подумайте
+</details>
+
+<details>
+<summary><b>Какая сигнатура у магических методов, необходимых для реализации протокола контекстного менеджера?</b></summary>
+
+Подумайте
+</details>
+
 ---
 
 ### Сложные вопросы
+
+<details>
+<summary><b>В чем опасность этого контекстного менеджера? Что будет напечатано?</b></summary>
+
+Подумайте
+</details>
+
+```python
+class DatabaseConnection:
+    def __enter__(self):
+        print("Connecting to database...")
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        if exc_type is not None:
+            print(f"Error: {exc_val}")
+        print("Disconnecting from database...")
+        return True
+
+
+with DatabaseConnection():
+    raise ValueError("Critical error!")
+print("Program continues...")
+```
+
+<details>
+<summary><b>Что делает и как работает этот код?</b></summary>
+
+Подумайте
+</details>
+
+```python
+from contextlib import contextmanager
+
+
+@contextmanager
+def magic_contextmanager() -> tp.Iterator[int]:
+    print("before")
+    try:
+        yield 42
+    except Exception as e:
+        print(f"{e=}")
+    finally:
+        print("after")
+```
 
 ---
 
@@ -239,13 +982,90 @@ for lst in lists:
 
 ### Простые вопросы
 
+<details>
+<summary><b>Что такое протокол в Python? Приведите пример.</b></summary>
+
+</details>
+
+<details>
+<summary><b>Что такое "Утиная типизация" (Duck Typing)? Объясните на примере.</b></summary>
+
+</details>
+
+<details>
+<summary><b>Что такое "Гусиная типизация" (Goose Typing) и чем она отличается от утиной?</b></summary>
+
+</details>
+
 ---
 
 ### Средние вопросы
 
+<details>
+<summary><b>Какие встроенные протоколы вы знаете? Приведите примеры.</b></summary>
+
+</details>
+
+<details>
+<summary><b>Что такое структурная типизация (Structural Typing) и как она связана с протоколами?</b></summary>
+
+</details>
+
+<details>
+<summary><b>Как абстрактные базовые классы (ABC) помогают в гусиной типизации?</b></summary>
+
+</details>
+
+<details>
+<summary><b>В чем разница между isinstance() проверкой с ABC и утиной типизацией?</b></summary>
+
+</details>
+
 ---
 
 ### Сложные вопросы
+
+<details>
+<summary><b>Как создать собственный протокол с помощью typing.Protocol?</b></summary>
+
+</details>
+
+<details>
+<summary><b>Прокомментируйте этот код. Что мы можем делать с классом Deck? Это утиная или гусиная типизация?</b></summary>
+
+</details>
+
+```python
+from collections import abc, namedtuple
+from typing import Self
+
+Card = namedtuple("Card", ["rank", "suit"])
+
+
+class Deck(abc.MutableSequence):
+    ranks = [str(n) for n in range(2, 11)] + list("JQKA")
+    suits = "spades diamonds clubs hearts".split()
+
+    def __init__(self) -> Self:
+        self._cards = [Card(rank, suit) for suit in self.suits for rank in self.ranks]
+
+    def __len__(self) -> int:
+        return len(self._cards)
+
+    def __getitem__(self, position: int) -> Card:
+        return self._cards[position]
+
+    def __setitem__(self, position: int, value: Card) -> None:
+        self._cards[position] = value
+
+    def __delitem__(self, position: int) -> None:
+        del self._cards[position]
+
+    def insert(
+        self, position: int, value: Card
+    ):
+        self._cards.insert(position, value)
+```
 
 ---
 
@@ -388,6 +1208,12 @@ def repeat(iterable: tp.Iterable[int], times: int | None = None):
         yield from iterable
 ```
 
+<details>
+<summary><b>Какое исключение пробрасывается в генератор когда мы его закрываем?</b></summary>
+
+`GeneratorExit`
+</details>
+
 ---
 
 ### Сложные вопросы
@@ -441,32 +1267,91 @@ def cycle(iterable: tp.Iterable[tp.Any]) -> tp.Iterator[tp.Any]:
 
 ---
 
-## Collections + itertools.
-
-Нужны ли нам тут вообще вопросы?...
-
-### Простые вопросы
-
----
-
-### Средние вопросы
-
----
-
-### Сложные вопросы
-
----
-
 ## Namespaces. Декораторы.
 
 ### Простые вопросы
 
+<details>
+<summary><b>Что такое пространство имен (namespace) в Python? Какие типы namespaces существуют?</b></summary>
+
+</details>
+
+<details>
+<summary><b>Что такое область видимости (scope) и как работает правило LEGB?</b></summary>
+
+</details>
+
+<details>
+<summary><b>Что такое декоратор? Для чего используется декоратор?</b></summary>
+
+</details>
+
+<details>
+<summary><b>Как работают ключевые слова global и nonlocal?</b></summary>
+
+</details>
+
 ---
 
 ### Средние вопросы
 
+<details>
+<summary><b>Что такое замыкание (closure) и как оно связано с пространствами имен?</b></summary>
+
+</details>
+
+<details>
+<summary><b>Как декоратор влияет на метаданные функции и как это исправить?</b></summary>
+
+Тут про `functools.wraps`s
+</details>
+
 ---
 
 ### Сложные вопросы
+
+<details>
+<summary><b>Объясните как это работает:</b></summary>
+
+</details>
+
+```python
+import functools
+import warnings
+from collections.abc import Callable
+from datetime import date, datetime
+import typing as tp
+
+
+P = tp.ParamSpec("P")
+R = tp.TypeVar("R")
+
+
+def deprecated(
+    *, since: date | datetime | None = None
+) -> Callable[[Callable[P, R]], Callable[P, R]]:
+    def decorator(func: Callable[P, R]) -> Callable[P, R]:
+        @functools.wraps(func)
+        def wrapper(*args: P.args, **kwargs: P.kwargs) -> R:
+            parts: list[str] = [f"Function {func.__name__}() is deprecated."]
+            if since is not None:
+                stamp = (
+                    since.date().isoformat()
+                    if isinstance(since, datetime)
+                    else since.isoformat()
+                )
+                parts.append(f"Since {stamp}.")
+            warnings.warn(" ".join(parts), DeprecationWarning)
+            return func(*args, **kwargs)
+
+        return wrapper
+
+    return decorator
+```
+
+<details>
+<summary><b>Как работают цепочки декораторов? Какие нюансы нужно учитывать при написании цепочки?</b></summary>
+
+</details>
 
 ---

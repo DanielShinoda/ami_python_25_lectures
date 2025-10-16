@@ -135,9 +135,10 @@ def convert_markdown_to_html(text):
         flags=re.DOTALL,
     )
 
+    # Обрабатываем код с нумерацией строк
     text = re.sub(
         r"```python\s*(.*?)\s*```",
-        r'<pre><code class="language-python">\1</code></pre>',
+        lambda match: format_code_with_line_numbers(match.group(1)),
         text,
         flags=re.DOTALL,
     )
@@ -147,6 +148,19 @@ def convert_markdown_to_html(text):
     text = text.replace("\n", "<br>")
 
     return text
+
+
+def format_code_with_line_numbers(code):
+    """Форматирует код Python с нумерацией строк"""
+    lines = code.strip().split("\n")
+    numbered_lines = []
+
+    for i, line in enumerate(lines, 1):
+        numbered_lines.append(
+            f'<div class="code-line"><span class="line-number">{i}</span><span class="line-content">{line}</span></div>'
+        )
+
+    return f'<div class="code-block"><div class="code-lines">{chr(10).join(numbered_lines)}</div></div>'
 
 
 def generate_html(selected_questions, output_filename):
@@ -159,6 +173,12 @@ def generate_html(selected_questions, output_filename):
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Вопросы для экзамена</title>
+        
+        <!-- Подключение Highlight.js для подсветки кода -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script>
+        
         <style>
             body {{
                 font-family: Arial, sans-serif;
@@ -172,153 +192,253 @@ def generate_html(selected_questions, output_filename):
                 top: 20px;
                 right: 20px;
                 background: #f0f0f0;
-                padding: 10px 15px;
-                border-radius: 5px;
-                font-size: 18px;
+                padding: 20px 25px;
+                border-radius: 10px;
+                font-size: 48px;
                 font-weight: bold;
-                box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+                box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+                z-index: 1000;
+                min-width: 150px;
+                text-align: center;
             }}
             .timer.urgent {{
                 background: #ffcccc;
                 color: #cc0000;
+                animation: pulse 1s infinite;
+            }}
+            @keyframes pulse {{
+                0% {{ transform: scale(1); }}
+                50% {{ transform: scale(1.05); }}
+                100% {{ transform: scale(1); }}
             }}
             button {{
                 background: #4CAF50;
                 color: white;
                 border: none;
-                padding: 10px 15px;
-                border-radius: 4px;
+                padding: 15px 25px;
+                border-radius: 6px;
                 cursor: pointer;
-                font-size: 16px;
-                margin: 10px 0;
+                font-size: 18px;
+                margin: 10px 5px;
+                transition: background 0.3s;
             }}
             button:hover {{
                 background: #45a049;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0,0,0,0.2);
             }}
-            table {{
-                width: 100%;
-                border-collapse: collapse;
+            .question-container {{
                 margin: 20px 0;
-            }}
-            th, td {{
-                border: 1px solid #ddd;
-                padding: 12px;
-                text-align: left;
-            }}
-            th {{
-                background-color: #f2f2f2;
-            }}
-            tr:nth-child(even) {{
-                background-color: #f9f9f9;
+                padding: 20px;
+                border: 1px solid #e0e0e0;
+                border-radius: 8px;
+                background: #fafafa;
             }}
             details {{
-                margin: 10px 0;
+                margin: 15px 0;
                 border: 1px solid #ddd;
-                border-radius: 4px;
-                padding: 10px;
+                border-radius: 6px;
+                padding: 15px;
+                background: white;
             }}
             summary {{
                 cursor: pointer;
                 font-weight: bold;
+                font-size: 18px;
+                padding: 10px;
+                background: #f5f5f5;
+                border-radius: 4px;
+                margin: -15px;
+                padding: 15px;
             }}
             .answer {{
-                margin-top: 10px;
-                padding: 10px;
+                margin-top: 15px;
+                padding: 15px;
                 background: #f9f9f9;
-                border-radius: 4px;
+                border-radius: 6px;
+                border-left: 4px solid #4CAF50;
             }}
-            pre {{
-                background: #f4f4f4;
-                padding: 10px;
-                border-radius: 4px;
+            .code-block {{
+                background: #2d2d2d;
+                border-radius: 6px;
+                overflow: hidden;
+                margin: 15px 0;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            }}
+            .code-lines {{
+                font-family: 'Courier New', monospace;
+                color: #f8f8f2;
+                padding: 15px 0;
                 overflow-x: auto;
+            }}
+            .code-line {{
+                display: flex;
+                padding: 2px 15px;
+            }}
+            .line-number {{
+                color: #6c6c6c;
+                min-width: 40px;
+                text-align: right;
+                padding-right: 15px;
+                user-select: none;
+                border-right: 1px solid #444;
+                margin-right: 15px;
+            }}
+            .line-content {{
+                flex: 1;
+                white-space: pre;
             }}
             .topic {{
                 font-style: italic;
                 color: #666;
-                margin-bottom: 5px;
+                margin-bottom: 10px;
+                font-size: 16px;
+                padding: 5px 10px;
+                background: #e9e9e9;
+                border-radius: 4px;
+                display: inline-block;
             }}
             .section {{
-                margin-bottom: 30px;
+                margin-bottom: 40px;
+                padding: 20px;
+                background: white;
+                border-radius: 8px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
             }}
-            input, textarea {{
-                width: 100%;
+            .controls {{
+                margin: 30px 0;
+                text-align: center;
+                padding: 20px;
+                background: #f8f8f8;
+                border-radius: 8px;
+            }}
+            .score-section {{
+                margin: 20px 0;
+                padding: 15px;
+                background: #e8f4fd;
+                border-radius: 8px;
+                border-left: 4px solid #2196F3;
+            }}
+            .score-input {{
+                margin: 10px 0;
+                display: flex;
+                align-items: center;
+            }}
+            .score-input label {{
+                margin-right: 10px;
+                font-weight: bold;
+                min-width: 150px;
+            }}
+            .score-input input {{
                 padding: 8px;
                 border: 1px solid #ddd;
                 border-radius: 4px;
-                box-sizing: border-box;
+                width: 80px;
             }}
-            .controls {{
-                margin: 20px 0;
+            .total-score {{
+                font-size: 24px;
+                font-weight: bold;
                 text-align: center;
+                margin: 20px 0;
+                padding: 15px;
+                background: #e8f5e9;
+                border-radius: 8px;
+                border: 2px solid #4CAF50;
+            }}
+            .formula-info {{
+                text-align: center;
+                margin: 10px 0;
+                color: #666;
+                font-style: italic;
+            }}
+            h1 {{
+                color: #2c3e50;
+                text-align: center;
+                margin-bottom: 30px;
+                border-bottom: 2px solid #eee;
+                padding-bottom: 15px;
+            }}
+            h2 {{
+                color: #34495e;
+                border-left: 4px solid #3498db;
+                padding-left: 15px;
             }}
         </style>
     </head>
     <body>
-        <h1>Вопросы для собеседования</h1>
-        <p>Дата: {datetime.now().strftime("%d.%m.%Y %H:%M")}</p>
+        <h1>Вопросы для экзамена</h1>
+        <p style="text-align: center; color: #666;">Дата: {datetime.now().strftime("%d.%m.%Y %H:%M")}</p>
         
         <div class="controls">
             <button onclick="startTimer()">Запустить таймер (10 минут)</button>
             <button onclick="resetTimer()">Сбросить таймер</button>
-            <button onclick="saveResults()">Сохранить результаты</button>
         </div>
         
         <div id="timer" class="timer">10:00</div>
-        
-        <form id="interviewForm">
     """
 
-    html_content += '<div class="section"><h2>Основные вопросы</h2><table>'
-    html_content += (
-        "<tr><th>№</th><th>Вопрос</th><th>Оценка (1-10)</th><th>Комментарий</th></tr>"
-    )
+    # Основные вопросы
+    html_content += '<div class="section"><h2>Основные вопросы</h2>'
 
     question_num = 1
+    weights = {"Простые": 0.5, "Средние": 1, "Сложные": 2}
+
     for level in ["Простые", "Средние", "Сложные"]:
         for topic_name, question in selected_questions[level]:
             html_question = convert_markdown_to_html(question)
+            weight = weights[level]
             html_content += f"""
-            <tr>
-                <td>{question_num}</td>
-                <td>
-                    <div class="topic">Тема: {topic_name} | Уровень: {level}</div>
-                    {html_question}
-                </td>
-                <td><input type="number" name="score_{question_num}" min="1" max="10"></td>
-                <td><textarea name="comment_{question_num}" rows="3"></textarea></td>
-            </tr>
+            <div class="question-container">
+                <div class="topic">Вопрос {question_num} | Тема: {topic_name} | Уровень: {level} | Вес: {weight}</div>
+                {html_question}
+                <div class="score-section">
+                    <div class="score-input">
+                        <label>Оценка (0-10):</label>
+                        <input type="number" min="0" max="10" step="0.1" id="score_{question_num}" data-weight="{weight}" onchange="calculateTotal()">
+                    </div>
+                </div>
+            </div>
             """
             question_num += 1
 
-    html_content += "</table></div>"
+    html_content += "</div>"
 
-    html_content += '<div class="section"><h2>Дополнительные вопросы</h2><table>'
-    html_content += (
-        "<tr><th>№</th><th>Вопрос</th><th>Оценка (1-10)</th><th>Комментарий</th></tr>"
-    )
+    # Дополнительные вопросы
+    if selected_questions["Дополнительные"]:
+        html_content += '<div class="section"><h2>Дополнительные вопросы</h2>'
 
-    for i, (topic_name, question) in enumerate(selected_questions["Дополнительные"], 1):
-        html_question = convert_markdown_to_html(question)
-        html_content += f"""
-        <tr>
-            <td>{question_num}</td>
-            <td>
-                <div class="topic">Тема: {topic_name}</div>
+        for i, (topic_name, question) in enumerate(
+            selected_questions["Дополнительные"], 1
+        ):
+            html_question = convert_markdown_to_html(question)
+            weight = 1  # Вес дополнительных вопросов
+            html_content += f"""
+            <div class="question-container">
+                <div class="topic">Дополнительный вопрос {i} | Тема: {topic_name} | Вес: {weight}</div>
                 {html_question}
-            </td>
-            <td><input type="number" name="score_extra_{i}" min="1" max="10"></td>
-            <td><textarea name="comment_extra_{i}" rows="3"></textarea></td>
-        </tr>
-        """
-        question_num += 1
+                <div class="score-section">
+                    <div class="score-input">
+                        <label>Оценка (0-10):</label>
+                        <input type="number" min="0" max="10" step="0.1" id="score_extra_{i}" data-weight="{weight}" onchange="calculateTotal()">
+                    </div>
+                </div>
+            </div>
+            """
 
-    html_content += "</table></div>"
+    html_content += "</div>"
 
-    # Закрываем форму и добавляем JavaScript
+    # Секция с итоговой оценкой
     html_content += """
-        </form>
-        
+        <div class="formula-info">
+            Формула расчета: (Простые × 0.5) + (Средние × 1) + (Сложные × 2) + (Дополнительные × 1)
+        </div>
+        <div class="total-score">
+            Итоговая оценка: <span id="total-score">0</span> / 10
+        </div>
+    """
+
+    # Закрываем body и добавляем JavaScript
+    html_content += """
         <script>
             let timerInterval;
             let timeLeft = 600; // 10 минут в секундах
@@ -359,30 +479,35 @@ def generate_html(selected_questions, output_filename):
                 document.getElementById('timer').classList.remove('urgent');
             }
             
-            function saveResults() {
-                const form = document.getElementById('interviewForm');
-                const formData = new FormData(form);
-                let results = "Результаты собеседования\\n\\n";
+            function calculateTotal() {
+                let total = 0;
+                let maxPossible = 0;
                 
-                for (let [key, value] of formData.entries()) {
-                    if (value.trim() !== '') {
-                        results += `${key}: ${value}\\n`;
-                    }
-                }
+                // Основные вопросы
+                const basicQuestions = document.querySelectorAll('input[id^="score_"]:not([id^="score_extra_"])');
+                basicQuestions.forEach(input => {
+                    const score = parseFloat(input.value) || 0;
+                    const weight = parseFloat(input.dataset.weight);
+                    total += score * weight / 10; // Делим на 10, так как оценка вводится по 10-балльной шкале
+                    maxPossible += 10 * weight / 10; // Максимальная оценка для этого вопроса
+                });
                 
-                const blob = new Blob([results], { type: 'text/plain' });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = url;
-                a.download = 'результаты_собеседования.txt';
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
+                // Дополнительные вопросы
+                const extraQuestions = document.querySelectorAll('input[id^="score_extra_"]');
+                extraQuestions.forEach(input => {
+                    const score = parseFloat(input.value) || 0;
+                    const weight = parseFloat(input.dataset.weight);
+                    total += score * weight / 10; // Делим на 10, так как оценка вводится по 10-балльной шкале
+                    maxPossible += 10 * weight / 10; // Максимальная оценка для этого вопроса
+                });
                 
-                alert('Результаты сохранены в файл!');
+                // Ограничиваем максимальную оценку 10
+                total = Math.min(total, 10);
+                
+                document.getElementById('total-score').textContent = total.toFixed(2);
             }
 
+            // Автоматически закрывать все ответы при загрузке
             document.querySelectorAll('details').forEach(detail => {
                 detail.open = false;
             });
@@ -397,22 +522,29 @@ def generate_html(selected_questions, output_filename):
 
 def main():
     try:
+        # Парсим README.md
+        print("Парсим README.md...")
         topics = parse_readme("README.md")
 
+        # Проверяем, что нашли вопросы
         total_questions = 0
         for topic_name, levels in topics.items():
             for level, questions in levels.items():
                 total_questions += len(questions)
+                print(f"{topic_name} - {level}: {len(questions)} вопросов")
 
         if total_questions == 0:
             print("Не найдено ни одного вопроса в README.md!")
             return
 
+        # Выбираем случайные вопросы
+        print("Выбираем случайные вопросы...")
         selected = select_random_questions(
             topics, simple_count=2, medium_count=2, hard_count=2, extra_count=3
         )
 
-        output_file = "interview_questions.html"
+        # Создаем HTML-файл
+        output_file = "exam_questions.html"
         generate_html(selected, output_file)
 
     except FileNotFoundError:

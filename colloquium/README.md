@@ -16,8 +16,8 @@
 
 Для генерации случайных вопросов запустите внутри директории:
 
-```python
-python questions_selector.py
+```bash
+python generator.py && open exam_questions.html
 ```
 
 ## IO. Типы данных.

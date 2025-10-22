@@ -1,0 +1,392 @@
+
+    <!DOCTYPE html>
+    <html lang="ru">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Вопросы для экзамена</title>
+        
+        <!-- Подключение Highlight.js для подсветки кода -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script>
+        
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                max-width: 1200px;
+                margin: 0 auto;
+                padding: 20px;
+                line-height: 1.6;
+            }
+            .timer {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: #f0f0f0;
+                padding: 20px 25px;
+                border-radius: 10px;
+                font-size: 48px;
+                font-weight: bold;
+                box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+                z-index: 1000;
+                min-width: 150px;
+                text-align: center;
+            }
+            .timer.urgent {
+                background: #ffcccc;
+                color: #cc0000;
+                animation: pulse 1s infinite;
+            }
+            @keyframes pulse {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.05); }
+                100% { transform: scale(1); }
+            }
+            button {
+                background: #4CAF50;
+                color: white;
+                border: none;
+                padding: 15px 25px;
+                border-radius: 6px;
+                cursor: pointer;
+                font-size: 18px;
+                margin: 10px 5px;
+                transition: background 0.3s;
+            }
+            button:hover {
+                background: #45a049;
+                transform: translateY(-2px);
+                box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            }
+            .question-container {
+                margin: 20px 0;
+                padding: 20px;
+                border: 1px solid #e0e0e0;
+                border-radius: 8px;
+                background: #fafafa;
+            }
+            details {
+                margin: 15px 0;
+                border: 1px solid #ddd;
+                border-radius: 6px;
+                padding: 15px;
+                background: white;
+            }
+            summary {
+                cursor: pointer;
+                font-weight: bold;
+                font-size: 18px;
+                padding: 10px;
+                background: #f5f5f5;
+                border-radius: 4px;
+                margin: -15px;
+                padding: 15px;
+            }
+            .answer {
+                margin-top: 15px;
+                padding: 15px;
+                background: #f9f9f9;
+                border-radius: 6px;
+                border-left: 4px solid #4CAF50;
+            }
+            .code-block {
+                background: #2d2d2d;
+                border-radius: 6px;
+                overflow: hidden;
+                margin: 15px 0;
+                box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            }
+            .code-lines {
+                font-family: 'Courier New', monospace;
+                color: #f8f8f2;
+                padding: 15px 0;
+                overflow-x: auto;
+            }
+            .code-line {
+                display: flex;
+                padding: 2px 15px;
+            }
+            .line-number {
+                color: #6c6c6c;
+                min-width: 40px;
+                text-align: right;
+                padding-right: 15px;
+                user-select: none;
+                border-right: 1px solid #444;
+                margin-right: 15px;
+            }
+            .line-content {
+                flex: 1;
+                white-space: pre;
+            }
+            .topic {
+                font-style: italic;
+                color: #666;
+                margin-bottom: 10px;
+                font-size: 16px;
+                padding: 5px 10px;
+                background: #e9e9e9;
+                border-radius: 4px;
+                display: inline-block;
+            }
+            .section {
+                margin-bottom: 40px;
+                padding: 20px;
+                background: white;
+                border-radius: 8px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            }
+            .controls {
+                margin: 30px 0;
+                text-align: center;
+                padding: 20px;
+                background: #f8f8f8;
+                border-radius: 8px;
+            }
+            .score-section {
+                margin: 20px 0;
+                padding: 15px;
+                background: #e8f4fd;
+                border-radius: 8px;
+                border-left: 4px solid #2196F3;
+            }
+            .score-input {
+                margin: 10px 0;
+                display: flex;
+                align-items: center;
+            }
+            .score-input label {
+                margin-right: 10px;
+                font-weight: bold;
+                min-width: 150px;
+            }
+            .score-input input {
+                padding: 8px;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                width: 80px;
+            }
+            .total-score {
+                font-size: 24px;
+                font-weight: bold;
+                text-align: center;
+                margin: 20px 0;
+                padding: 15px;
+                background: #e8f5e9;
+                border-radius: 8px;
+                border: 2px solid #4CAF50;
+            }
+            .formula-info {
+                text-align: center;
+                margin: 10px 0;
+                color: #666;
+                font-style: italic;
+            }
+            h1 {
+                color: #2c3e50;
+                text-align: center;
+                margin-bottom: 30px;
+                border-bottom: 2px solid #eee;
+                padding-bottom: 15px;
+            }
+            h2 {
+                color: #34495e;
+                border-left: 4px solid #3498db;
+                padding-left: 15px;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Вопросы для экзамена</h1>
+        <p style="text-align: center; color: #666;">Дата: 16.10.2025 18:30</p>
+        
+        <div class="controls">
+            <button onclick="startTimer()">Запустить таймер (10 минут)</button>
+            <button onclick="resetTimer()">Сбросить таймер</button>
+        </div>
+        
+        <div id="timer" class="timer">10:00</div>
+    <div class="section"><h2>Основные вопросы</h2>
+            <div class="question-container">
+                <div class="topic">Вопрос 1 | Тема: Итераторы и генераторы. | Уровень: Простые | Вес: 0.5</div>
+                <details><summary><b>Является ли итерируемый объект итератором?</b></summary><div class="answer">Нет, не является.</div></details>
+                <div class="score-section">
+                    <div class="score-input">
+                        <label>Оценка (0-10):</label>
+                        <input type="number" min="0" max="10" step="0.1" id="score_1" data-weight="0.5" onchange="calculateTotal()">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question-container">
+                <div class="topic">Вопрос 2 | Тема: Контейнеры. | Уровень: Простые | Вес: 0.5</div>
+                <details><summary><b>Какое применение множеств и словарей вы знаете?</b></summary><div class="answer"></div></details>
+                <div class="score-section">
+                    <div class="score-input">
+                        <label>Оценка (0-10):</label>
+                        <input type="number" min="0" max="10" step="0.1" id="score_2" data-weight="0.5" onchange="calculateTotal()">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question-container">
+                <div class="topic">Вопрос 3 | Тема: Протоколы и интерфейсы. | Уровень: Средние | Вес: 1</div>
+                <details><summary><b>В чем разница между isinstance() проверкой с ABC и утиной типизацией?</b></summary><div class="answer"></div></details>
+                <div class="score-section">
+                    <div class="score-input">
+                        <label>Оценка (0-10):</label>
+                        <input type="number" min="0" max="10" step="0.1" id="score_3" data-weight="1" onchange="calculateTotal()">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question-container">
+                <div class="topic">Вопрос 4 | Тема: Контейнеры. | Уровень: Средние | Вес: 1</div>
+                <details><summary><b>Как проверить объект на хешируемость?</b></summary><div class="answer"></div></details>
+                <div class="score-section">
+                    <div class="score-input">
+                        <label>Оценка (0-10):</label>
+                        <input type="number" min="0" max="10" step="0.1" id="score_4" data-weight="1" onchange="calculateTotal()">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question-container">
+                <div class="topic">Вопрос 5 | Тема: Контейнеры. | Уровень: Сложные | Вес: 2</div>
+                <details><summary><b>Какой из способов создать словарь валидный?</b></summary><div class="answer"></div></details><br><br><div class="code-block"><div class="code-lines"><div class="code-line"><span class="line-number">1</span><span class="line-content">(</span></div><br><div class="code-line"><span class="line-number">2</span><span class="line-content">    {None: None},</span></div><br><div class="code-line"><span class="line-number">3</span><span class="line-content">    {(1, 2, []): None},</span></div><br><div class="code-line"><span class="line-number">4</span><span class="line-content">    {int(): None},</span></div><br><div class="code-line"><span class="line-number">5</span><span class="line-content">    {input: None},</span></div><br><div class="code-line"><span class="line-number">6</span><span class="line-content">    {frozenset(): None},</span></div><br><div class="code-line"><span class="line-number">7</span><span class="line-content">    {3: None},</span></div><br><div class="code-line"><span class="line-number">8</span><span class="line-content">    {"key": None},</span></div><br><div class="code-line"><span class="line-number">9</span><span class="line-content">    {int: None},</span></div><br><div class="code-line"><span class="line-number">10</span><span class="line-content">)</span></div></div></div>
+                <div class="score-section">
+                    <div class="score-input">
+                        <label>Оценка (0-10):</label>
+                        <input type="number" min="0" max="10" step="0.1" id="score_5" data-weight="2" onchange="calculateTotal()">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question-container">
+                <div class="topic">Вопрос 6 | Тема: Namespaces. Декораторы. | Уровень: Сложные | Вес: 2</div>
+                <details><summary><b>Как работают цепочки декораторов? Какие нюансы нужно учитывать при написании цепочки?</b></summary><div class="answer"></div></details>
+                <div class="score-section">
+                    <div class="score-input">
+                        <label>Оценка (0-10):</label>
+                        <input type="number" min="0" max="10" step="0.1" id="score_6" data-weight="2" onchange="calculateTotal()">
+                    </div>
+                </div>
+            </div>
+            </div><div class="section"><h2>Дополнительные вопросы</h2>
+            <div class="question-container">
+                <div class="topic">Дополнительный вопрос 1 | Тема: Контейнеры. | Вес: 1</div>
+                <details><summary><b>Верно ли утверждение, что неизменяемые объекты являются хешируемыми?</b></summary><div class="answer"></div></details>
+                <div class="score-section">
+                    <div class="score-input">
+                        <label>Оценка (0-10):</label>
+                        <input type="number" min="0" max="10" step="0.1" id="score_extra_1" data-weight="1" onchange="calculateTotal()">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question-container">
+                <div class="topic">Дополнительный вопрос 2 | Тема: Функции. | Вес: 1</div>
+                <details><summary><b>Что выведет этот код и почему?</b></summary><div class="answer"></div></details><br><br><div class="code-block"><div class="code-lines"><div class="code-line"><span class="line-number">1</span><span class="line-content">def func(a, b, c):</span></div><br><div class="code-line"><span class="line-number">2</span><span class="line-content">    return a + b + c</span></div><br><div class="code-line"><span class="line-number">3</span><span class="line-content"></span></div><br><div class="code-line"><span class="line-number">4</span><span class="line-content">print(func(a=1, 2, 3))</span></div></div></div>
+                <div class="score-section">
+                    <div class="score-input">
+                        <label>Оценка (0-10):</label>
+                        <input type="number" min="0" max="10" step="0.1" id="score_extra_2" data-weight="1" onchange="calculateTotal()">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="question-container">
+                <div class="topic">Дополнительный вопрос 3 | Тема: Итераторы и генераторы. | Вес: 1</div>
+                <details><summary><b>Что делает функция accumulator?</b></summary><div class="answer"></div></details><br><br><div class="code-block"><div class="code-lines"><div class="code-line"><span class="line-number">1</span><span class="line-content">def accumulator() -> tp.Generator[int, int, None]:</span></div><br><div class="code-line"><span class="line-number">2</span><span class="line-content">    total = 0</span></div><br><div class="code-line"><span class="line-number">3</span><span class="line-content">    while True:</span></div><br><div class="code-line"><span class="line-number">4</span><span class="line-content">        try:</span></div><br><div class="code-line"><span class="line-number">5</span><span class="line-content">            value = yield total</span></div><br><div class="code-line"><span class="line-number">6</span><span class="line-content">        except GeneratorExit:</span></div><br><div class="code-line"><span class="line-number">7</span><span class="line-content">            print(f"Generator is close, {total=}")</span></div><br><div class="code-line"><span class="line-number">8</span><span class="line-content">            raise</span></div><br><div class="code-line"><span class="line-number">9</span><span class="line-content"></span></div><br><div class="code-line"><span class="line-number">10</span><span class="line-content">        if value is None:</span></div><br><div class="code-line"><span class="line-number">11</span><span class="line-content">            break</span></div><br><div class="code-line"><span class="line-number">12</span><span class="line-content">        total += value</span></div></div></div>
+                <div class="score-section">
+                    <div class="score-input">
+                        <label>Оценка (0-10):</label>
+                        <input type="number" min="0" max="10" step="0.1" id="score_extra_3" data-weight="1" onchange="calculateTotal()">
+                    </div>
+                </div>
+            </div>
+            </div>
+        <div class="formula-info">
+            Формула расчета: (Простые × 0.5) + (Средние × 1) + (Сложные × 2) + (Дополнительные × 1)
+        </div>
+        <div class="total-score">
+            Итоговая оценка: <span id="total-score">0</span> / 10
+        </div>
+    
+        <script>
+            let timerInterval;
+            let timeLeft = 600; // 10 минут в секундах
+            
+            function updateTimer() {
+                const minutes = Math.floor(timeLeft / 60);
+                const seconds = timeLeft % 60;
+                document.getElementById('timer').textContent = 
+                    `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                
+                if (timeLeft <= 60) {
+                    document.getElementById('timer').classList.add('urgent');
+                }
+                
+                if (timeLeft <= 0) {
+                    clearInterval(timerInterval);
+                    alert('Время вышло!');
+                } else {
+                    timeLeft--;
+                }
+            }
+            
+            function startTimer() {
+                if (timerInterval) {
+                    clearInterval(timerInterval);
+                }
+                timeLeft = 600;
+                updateTimer();
+                timerInterval = setInterval(updateTimer, 1000);
+            }
+            
+            function resetTimer() {
+                if (timerInterval) {
+                    clearInterval(timerInterval);
+                }
+                timeLeft = 600;
+                document.getElementById('timer').textContent = '10:00';
+                document.getElementById('timer').classList.remove('urgent');
+            }
+            
+            function calculateTotal() {
+                let total = 0;
+                let maxPossible = 0;
+                
+                // Основные вопросы
+                const basicQuestions = document.querySelectorAll('input[id^="score_"]:not([id^="score_extra_"])');
+                basicQuestions.forEach(input => {
+                    const score = parseFloat(input.value) || 0;
+                    const weight = parseFloat(input.dataset.weight);
+                    total += score * weight / 10; // Делим на 10, так как оценка вводится по 10-балльной шкале
+                    maxPossible += 10 * weight / 10; // Максимальная оценка для этого вопроса
+                });
+                
+                // Дополнительные вопросы
+                const extraQuestions = document.querySelectorAll('input[id^="score_extra_"]');
+                extraQuestions.forEach(input => {
+                    const score = parseFloat(input.value) || 0;
+                    const weight = parseFloat(input.dataset.weight);
+                    total += score * weight / 10; // Делим на 10, так как оценка вводится по 10-балльной шкале
+                    maxPossible += 10 * weight / 10; // Максимальная оценка для этого вопроса
+                });
+                
+                // Ограничиваем максимальную оценку 10
+                total = Math.min(total, 10);
+                
+                document.getElementById('total-score').textContent = total.toFixed(2);
+            }
+
+            // Автоматически закрывать все ответы при загрузке
+            document.querySelectorAll('details').forEach(detail => {
+                detail.open = false;
+            });
+        </script>
+    </body>
+    </html>
+    

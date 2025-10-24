@@ -993,16 +993,19 @@ def magic_contextmanager() -> tp.Iterator[int]:
 <details>
 <summary><b>Что такое протокол в Python? Приведите пример.</b></summary>
 
+Неформальный интерфейс с некоторым набором методов.
+Интерфейс - некоторый абстрактный набор методов.
+
 </details>
 
 <details>
 <summary><b>Что такое "Утиная типизация" (Duck Typing)? Объясните на примере.</b></summary>
-
+Если у объекта есть какой-то метод A, то это объект удовлетворяющий протокол с методом A.
 </details>
 
 <details>
 <summary><b>Что такое "Гусиная типизация" (Goose Typing) и чем она отличается от утиной?</b></summary>
-
+Если мы наследуем интерфейс А, то мы его реализовываем.
 </details>
 
 ---
@@ -1011,22 +1014,18 @@ def magic_contextmanager() -> tp.Iterator[int]:
 
 <details>
 <summary><b>Какие встроенные протоколы вы знаете? Приведите примеры.</b></summary>
-
-</details>
-
-<details>
-<summary><b>Что такое структурная типизация (Structural Typing) и как она связана с протоколами?</b></summary>
-
+Hashable, MutableSequence, Mapping
 </details>
 
 <details>
 <summary><b>Как абстрактные базовые классы (ABC) помогают в гусиной типизации?</b></summary>
-
+isinstance
 </details>
 
 <details>
 <summary><b>В чем разница между isinstance() проверкой с ABC и утиной типизацией?</b></summary>
-
+В гусиной проверяем предварительно
+В утиной в бою проверяем
 </details>
 
 ---
@@ -1035,7 +1034,10 @@ def magic_contextmanager() -> tp.Iterator[int]:
 
 <details>
 <summary><b>Как создать собственный протокол с помощью typing.Protocol?</b></summary>
-
+1. Наследоваться от typing.Protocol
+2. Определить методы и их сигнатуру
+3. Использовать в типизации
+4. В конце концов запустить проверку статичной типизации
 </details>
 
 <details>
@@ -1085,6 +1087,7 @@ class Deck(abc.MutableSequence):
 <summary><b>Как можно итерироваться по объекту?</b></summary>
 
 При помощи циклов и встроенной функции `next()`.
+Создать `__iter__` и применять к нему `__next__`.
 </details>
 
 <details>
